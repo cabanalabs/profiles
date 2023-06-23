@@ -1,0 +1,2 @@
+PROFILE_SERVER=https://cabana.me
+JWT_SECRET=secret
