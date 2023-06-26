@@ -9,8 +9,12 @@ cabana.config.set({
 cabana.auth.session({ id: '1234', name: 'Test', platform: 'discord'}).then((registration) => {
   console.log('registration', registration);
 
-  cabana.profile.getPublicUrl('1110384782635966556', '223956314609418240').then((hello) => {
+  cabana.profile.getPublicUrl('1080536264882790480', '350495033620824074').then((hello) => {
     console.log('imageUrl', hello);
+  });
+
+  cabana.profile.draft('1', '2', { name: 'A', title: 'B', avatar: 'https://upload.wikimedia.org/wikipedia/en/d/d7/Harry_Potter_character_poster.jpg'}).then((hello) => {
+    console.log('url', hello);
   });
 
   // cabana.badges.getList('1234').then((badges) => {
