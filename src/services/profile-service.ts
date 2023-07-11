@@ -1,15 +1,17 @@
 import {RestApi} from "./restApi";
-import {configEnv} from "../config-env";
 import console from "console";
-import {ProfileOptions} from "../types";
+import {ProfileMetadata, ProfileOptions} from "../types";
 
 export class ProfileService {
 
   private restApi = new RestApi('profile');
 
   async getPublicUrl(orgId: string, memberId: string) {
-    const path = await this.restApi.$get<string>(`/image/url`, null, { jwt: { tenant: orgId, user: memberId }});
-    return path && (configEnv.PROFILE_SERVER + path);
+    return this.restApi.$get<string>(`/image/url`, null, { jwt: { tenant: orgId, user: memberId }});
+  }
+
+  async getMetaData(orgId: string, memberId: string) {
+    return await this.restApi.$get<ProfileMetadata>(`/meta`, null, { jwt: { tenant: orgId, user: memberId }});
   }
 
   async avatar(orgId: string, userId: string, url: string) {

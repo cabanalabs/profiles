@@ -8,9 +8,17 @@ export type TenantReg = {
 }
 
 export type BadgeInfo = {
-  id: string;
+  id?: string;
   label: string;
+  provider: string;
+  visible?: boolean;
+};
+
+export type ClaimInfo = {
+  id: string;
   issuer: string;
+  credentialType: string;
+  properties: { [name: string]: any };
 };
 
 
@@ -20,37 +28,26 @@ export class ProfileOptions {
   bgUrl?: string;
   avatar?: string;
   name?: string;
-  did?: string
-  orgId?: string
-  userId?: string
-  userName?: string
-  bio?: string
-  accentColor?: string
-  format?: 'svg' | 'png' | 'html';
-  encoding?: 'base64' | 'binary' | 'html' | 'string';
-  timestamp?: number
+  did?: string;
+  // orgId?: string
+  // userId?: string
+  userName?: string;
+  bio?: string;
+  accentColor?: string;
+  format?: string; //'svg' | 'png' | 'html';
+  encoding?: string; //'base64' | 'binary' | 'html' | 'string';
+  timestamp?: number;
   qrCodeLink?: string;
-  badges?: string[];
+  badges?: BadgeInfo[];
   title?: string;
 }
 
-export type ProfileCommandVP = {
-  verifiableCredential: string[];
-}
-
-export type ProfileCommandVC = {
-  id: string;
-  type: string[];
-  issuer: { id: string };
-  credentialSubject: { [name: string]: any };
-}
-
-export type ProfileCommandClaims = {
-  issuer: string;
-  id: string;
-  visible: boolean;
-  credentialType: string;
-  properties: { [name: string]: any };
+export class ProfileMetadata {
+  imgUrl: string;
+  hero: ProfileOptions;
+  badges: BadgeInfo[];
+  claims: ClaimInfo[];
+  hasChanged?: boolean;
 }
 
 export type ProfilePresentationInfo = {

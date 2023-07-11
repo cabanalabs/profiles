@@ -6,9 +6,9 @@ export class MintService {
 
   private restApi = new RestApi('mint');
 
-  async profile(info: ProfilePresentationInfo) {
+  async profile(orgId: string, userId: string, info: ProfilePresentationInfo) {
     const meCard = info.meCard;
-    const { name, title, badges, bio, avatar, orgId, userId } = meCard;
+    const { name, title, badges, bio, avatar } = meCard;
     const platform = configEnv.getSessionProperty('platform')
     const iid = `${platform}:${userId}/profile`;
 
@@ -34,8 +34,7 @@ export class MintService {
     return this.restApi.$post<string>('/presentation', body, { jwt: { iid }});
   }
 
-
-  async badgeCredential(orgId: string, managerId: string, recipientId: string, badge: string) {
+  async issueBadgeCredential(orgId: string, managerId: string, recipientId: string, badge: string) {
 
     const platform = configEnv.getSessionProperty('platform')
     const iid = `${platform}:${managerId}`;
@@ -45,9 +44,26 @@ export class MintService {
       type: 'BadgeCredential',
       issuerIid: `${platform}:${orgId}`,
       recipientIid: `${platform}:${recipientId}`,
-      properties: { badge },
+      properties: { badge: { label: badge} },
     }
 
     return this.restApi.$post('/credential', body, { jwt: { iid }});
+  }
+
+  async claimCredential(orgId: string, userId: string, claimId: string) {
+
+    const platform = configEnv.getSessionProperty('platform')
+    const iid = `${platform}:${userId}`;
+
+    const body = {
+      issuerIid: `discord:${orgId}`,
+      claimId
+    }
+
+    const result = await this.restApi.$post<{ id: string }>('/claim', body, { jwt: { iid }});
+
+    console.log('claimCredential.result', result);
+
+    return result.id;
   }
 }

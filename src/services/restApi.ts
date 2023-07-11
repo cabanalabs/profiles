@@ -56,7 +56,7 @@ export class RestApi {
       'Authorization': 'Bearer ' + token
     };
 
-    console.log('postApi', url, jwtPayload, JSON.stringify(body,null,2), token);
+    console.log('httpRequest', method, url, jwtPayload, JSON.stringify(body,null,2), token);
 
     let result = await fetch(url, {method, headers, body: body && JSON.stringify(body)});
 
@@ -66,9 +66,11 @@ export class RestApi {
       throw new Error(`RestApi ${path} FAILED\n ${error}`);
     }
 
-    console.log(result.headers.get('Content-Type'));
+    const contentType = result.headers.get('Content-Type');
 
-    if (result.headers.get('Content-Type').includes('application/json')) return result.json();
+    console.log('contentType', contentType);
+
+    if (contentType && contentType.includes('application/json')) return result.json();
 
     return result.text();
   }

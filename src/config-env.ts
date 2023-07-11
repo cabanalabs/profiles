@@ -10,6 +10,7 @@ export class ConfigEnv {
 
   constructor() {
     this.PROFILE_SERVER = process.env.PROFILE_SERVER;
+    this.MINT_SERVER = process.env.MINT_SERVER;
     this.JWT_SECRET = process.env.JWT_SECRET;
     this.TENANT = process.env.TENANT;
   }

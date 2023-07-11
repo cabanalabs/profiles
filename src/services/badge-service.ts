@@ -8,9 +8,9 @@ export class BadgeService {
     return this.restApi.$get<BadgeInfo[]>('badges', null, { jwt: { tenant: orgId }});
   }
 
-  addNew(orgId: string, name: string) {
+  addNew(orgId: string, userId: string, name: string) {
 
-    return this.restApi.$post<BadgeInfo[]>('badge', { name }, { jwt: { tenant: orgId }});
+    return this.restApi.$post<BadgeInfo[]>('badge', { name }, { jwt: { tenant: orgId, manager: userId }});
   }
 
 }
