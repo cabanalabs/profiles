@@ -56,7 +56,7 @@ export class MintService {
     const iid = `${platform}:${userId}`;
 
     const body = {
-      issuerIid: `discord:${orgId}`,
+      issuerIid: `${platform}:${orgId}`,
       claimId
     }
 
