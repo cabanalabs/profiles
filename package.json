@@ -1,6 +1,6 @@
 {
   "name": "@cabana2/profiles",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -21,8 +21,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.3",
-    "jsonwebtoken": "^9.0.0",
-    "node-fetch": "^2.6.7"
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
     "@types/jest": "29.5.0",

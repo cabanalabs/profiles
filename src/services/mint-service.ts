@@ -10,13 +10,17 @@ export class MintService {
     const meCard = info.meCard;
     const { name, title, badges, bio, avatar } = meCard;
     const platform = configEnv.getSessionProperty('platform')
-    const iid = `${platform}:${userId}/profile`;
+    const iid = `${platform}:${userId}/${orgId}-profile`;
 
     const credentials: CredentialRequest[] = [];
 
     //Note: We may borrow Credentials from other projects and need to provide the id if there is one
     info.names.concat(info.titles, info.bios, info.avatars)
-    .filter(v => v.visible).forEach(c => credentials.push({ id: c.issuer !== 'self' && c.id, type: c.credentialType, properties: { [c.propertyName]: c.propertyValue }}));
+      .filter(v => v.visible)
+      .forEach(c => {
+        credentials.push({ id: c.issuer !== 'self' && c.id, type: c.credentialType, properties: { [c.propertyName]: c.propertyValue }})
+      });
+
     if (badges) info.badges.forEach(badge => credentials.push({ id: badge.id, type: 'BadgeCredential'}))
 
     // if (name) info.names.filter(v => v.visible).forEach(c => credentials.push({ id: c.id, type: c.credentialType, properties: c.propertyValue}));

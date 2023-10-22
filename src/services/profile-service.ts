@@ -11,19 +11,19 @@ export class ProfileService {
   }
 
   async getMetaData(orgId: string, memberId: string) {
-    return await this.restApi.$get<ProfileMetadata>(`/meta`, null, { jwt: { tenant: orgId, user: memberId }});
+    return this.restApi.$get<ProfileMetadata>(`/meta`, null, { jwt: { tenant: orgId, user: memberId }});
   }
 
   async avatar(orgId: string, userId: string, url: string) {
-    return await this.restApi.$post(`/avatar`, { url }, { jwt: { tenant: orgId, user: userId }});
+    return this.restApi.$post(`/avatar`, { url }, { jwt: { tenant: orgId, user: userId }});
   }
 
   async commit(orgId: string, userId: string) {
-    return await this.restApi.$post<string>(`/commit`, null, { jwt: { tenant: orgId, user: userId }});
+    return this.restApi.$post<string>(`/commit`, null, { jwt: { tenant: orgId, user: userId }});
   }
 
   async draft(orgId: string, userId: string, meCard: ProfileOptions) {
-    return await this.restApi.$post<string>(`/draft`, meCard, { jwt: { tenant: orgId, user: userId }});
+    return this.restApi.$post<string>(`/draft`, meCard, { jwt: { tenant: orgId, user: userId }});
   }
 
   async redeem(orgId: string, userId: string, code: string) {
