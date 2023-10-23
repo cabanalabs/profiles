@@ -1,8 +1,7 @@
 
-export type TenantReg = {
-  slug: string;
-  name: string;
+export type OrgReg = {
   badges: string;
+  tenant: string;
   notifyMints?: boolean;
   allowReset?: boolean;
 }
