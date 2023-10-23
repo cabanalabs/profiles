@@ -1,12 +1,38 @@
 import {RestApi} from "./restApi";
-import {CredentialRequest, CredentialRequestForm, PresentationRequestForm, ProfilePresentationInfo} from "../types";
+import {
+  CredentialRequest,
+  CredentialRequestForm,
+  PresentationRequestForm,
+  ProfileOptions,
+  ProfilePresentationInfo
+} from "../types";
 import {configEnv} from "../config-env";
 
 export class MintService {
 
   private restApi = new RestApi('mint');
 
-  async profile(orgId: string, userId: string, info: ProfilePresentationInfo) {
+  async issueVerifiableCredential(orgId: string, userId: string, meCard: ProfileOptions) {
+    const { name, avatar, userName } = meCard;
+    const platform = configEnv.getSessionProperty('platform')
+    const iid = `${platform}:${orgId}`;
+
+    const profile: any = { provider: platform, providerUserId: userId };
+    if (userName) profile.userName = userName;
+    if (name) profile.displayName = name;
+    if (avatar) profile.profileImage = avatar;
+
+    const body: CredentialRequestForm = {
+      type: 'SocialIdCredential',
+      issuerIid: `${platform}:${orgId}`,
+      recipientIid: `${platform}:${userId}`,
+      properties: profile
+    }
+
+    return this.restApi.$post<string>('/credential', body, { jwt: { iid }});
+  }
+
+  async issueVerifiablePresentation(orgId: string, userId: string, info: ProfilePresentationInfo) {
     const meCard = info.meCard;
     const { name, title, badges, bio, avatar } = meCard;
     const platform = configEnv.getSessionProperty('platform')
